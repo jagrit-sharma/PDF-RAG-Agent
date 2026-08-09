@@ -42,7 +42,14 @@ def buildCollections(model, client):
                 ids=[c["chunk_id"] for c in chunks],
                 documents=[c["text"] for c in chunks],
                 embeddings=vectors,
-                metadatas=[{"source": c["source"], "page": c["page"]} for c in chunks],
+                metadatas=[
+                    {
+                        "source": c["source"],
+                        "page_start": c["page_start"],
+                        "page_end": c["page_end"],
+                    }
+                    for c in chunks
+                ],
             )
         chunk_sets[size], collections[size] = chunks, col
         print(f"{size:>5} chars -> {len(chunks):>4} chunks, {col.count():>4} stored")
@@ -69,7 +76,10 @@ def tokenBudget(model, chunk_sets):
 def hits(model, col, question, k=TOP_K):
     r = col.query(query_embeddings=[model.encode(question)], n_results=k)
     return [
-        {"source": m["source"], "page": m["page"], "score": 1 - d / 2, "text": t}
+        # scored on page_start alone, as before — the +/-1 tolerance in
+        # rankOfAnswer already absorbs a chunk that runs onto the next page,
+        # so the D3 MRR numbers stay comparable
+        {"source": m["source"], "page": m["page_start"], "score": 1 - d / 2, "text": t}
         for m, d, t in zip(r["metadatas"][0], r["distances"][0], r["documents"][0])
     ]
 

@@ -22,6 +22,11 @@ def loadCollection():
     return client.get_collection(name=config.COLLECTION)
 
 
+def pageLabel(page_start, page_end):
+    """'p46' for a chunk on one page, 'pp46-47' for one that straddles a break."""
+    return f"p{page_start}" if page_start == page_end else f"pp{page_start}-{page_end}"
+
+
 def search(question, model, collection, n_results=5):
     results = collection.query(
         query_embeddings=[model.encode(question)],
@@ -32,7 +37,9 @@ def search(question, model, collection, n_results=5):
         {
             "chunk_id": chunk_id,
             "source": meta["source"],
-            "page": meta["page"],
+            "page_start": meta["page_start"],
+            "page_end": meta["page_end"],
+            "pages": pageLabel(meta["page_start"], meta["page_end"]),
             "text": doc,
             "distance": d,
             "score": 1 - d / 2,
@@ -49,7 +56,7 @@ def search(question, model, collection, n_results=5):
 def show(hits, preview=200):
     for rank, h in enumerate(hits, 1):
         text = " ".join(h["text"].split())
-        print(f"{rank}. {h['source']}  p{h['page']}   d={h['distance']:.4f}  cos={h['score']:.3f}")
+        print(f"{rank}. {h['source']}  {h['pages']}   d={h['distance']:.4f}  cos={h['score']:.3f}")
         print(f"   {text[:preview]}...")
         print()
 

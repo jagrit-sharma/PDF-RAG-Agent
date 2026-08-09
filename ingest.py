@@ -57,13 +57,18 @@ def chunkPages(pages, size=config.CHUNK_SIZE, overlap=config.CHUNK_OVERLAP):
 
         start, c = 0, 0
         while start < len(full_text):
-            page = page_numbers[bisect_right(offsets, start) - 1]
+            end = min(start + size, len(full_text))
+            # a 500-char window crosses a page break ~20% of the time, so record
+            # the span rather than the page the chunk happens to start on
+            page_start = page_numbers[bisect_right(offsets, start) - 1]
+            page_end = page_numbers[bisect_right(offsets, end - 1) - 1]
             chunks.append(
                 {
-                    "chunk_id": f"{source}_p{page}_c{c}",
+                    "chunk_id": f"{source}_p{page_start}_c{c}",
                     "source": source,
-                    "page": page,
-                    "text": full_text[start : start + size],
+                    "page_start": page_start,
+                    "page_end": page_end,
+                    "text": full_text[start:end],
                 }
             )
             c += 1
@@ -91,7 +96,14 @@ def store(chunks, vectors):
         ids=[c["chunk_id"] for c in chunks],
         documents=[c["text"] for c in chunks],
         embeddings=vectors,
-        metadatas=[{"source": c["source"], "page": c["page"]} for c in chunks],
+        metadatas=[
+            {
+                "source": c["source"],
+                "page_start": c["page_start"],
+                "page_end": c["page_end"],
+            }
+            for c in chunks
+        ],
     )
 
     print(f"{config.COLLECTION}: {collection.count()} chunks stored")
