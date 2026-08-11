@@ -25,9 +25,9 @@ MARKER = re.compile(r"\[(\d+)\]")
 
 # question → hits → context → Claude → answer → resolved sources
 
-def buildContext(hits):
+def buildContext(hits, start=1):
     blocks = []
-    for i, hit in enumerate(hits, 1):
+    for i, hit in enumerate(hits, start):
         text = " ".join(hit["text"].split())
         blocks.append(f"[{i}] {hit['source']}, {hit['pages']}\n{text}\n\n")
 
