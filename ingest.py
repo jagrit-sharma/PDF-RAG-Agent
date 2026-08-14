@@ -1,5 +1,7 @@
 import os
+import re
 from bisect import bisect_right
+from collections import Counter
 from itertools import groupby
 
 import chromadb
@@ -13,16 +15,38 @@ PAGE_SEP = "\n"
 
 # corpus → pages → chunks → vectors → store
 
+def normalise(line):
+    return re.sub(r"\s+", " ", re.sub(r"\d+", "#", line)).strip()
+
+
+def repeatedLines(texts, threshold=0.5):
+    counts = Counter()
+    for text in texts:
+        for line in {normalise(l) for l in text.splitlines() if l.strip()}:
+            counts[line] += 1
+
+    cutoff = threshold * len(texts)
+    return {line for line, n in counts.items() if n >= cutoff}
+
+
+def cleanPage(text, boilerplate):
+    kept = [l for l in text.splitlines() if normalise(l) not in boilerplate]
+    return " ".join(" ".join(kept).split())
+
+
 def readPDF(file):
     reader = PdfReader(file)
     source = os.path.basename(file)
+    raw = [p.extract_text(extraction_mode=config.EXTRACTION_MODE) or "" for p in reader.pages]
+    boilerplate = repeatedLines(raw)
+
     return [
         {
             "source": source,
             "page": i + 1,
-            "text": page.extract_text(),
+            "text": cleanPage(text, boilerplate),
         }
-        for i, page in enumerate(reader.pages)
+        for i, text in enumerate(raw)
     ]
 
 

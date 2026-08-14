@@ -1,0 +1,48 @@
+20 questions loaded
+run          2026-08-14 09:55
+embed model  all-MiniLM-L6-v2
+extraction   plain
+chunk size   500 / overlap 50
+collection   mas_docs_500  (463 chunks)
+top k        5
+
+id       type          expected             rank    top1  top-1 returned
+--------------------------------------------------------------------------------------
+inv-01   answerable    mrm [13, 14]            1   0.702  mrm p14
+inv-02   answerable    consult [15]            1   0.657  consult pp15-16
+inv-03   answerable    consult [8, 17]         1   0.740  consult p17
+val-01   answerable    mrm [29, 30, 31]        3   0.688  mrm pp15-16
+val-02   answerable    mrm [30, 31]            2   0.570  consult p25
+feat-01  answerable    feat [1, 6]          MISS   0.384  feat p3
+mat-01   answerable    mrm [15]             MISS   0.615  consult p18
+mat-02   answerable    consult [28, 29]        1   0.771  consult p29
+gov-01   answerable    consult [8]             1   0.686  consult pp7-8
+gen-01   answerable    mrm [36, 41]            4   0.614  mrm p39
+gen-02   answerable    consult [21]         MISS   0.686  consult p8
+tp-01    answerable    mrm [43, 44]            1   0.723  mrm p43
+vm-01    answerable    mrm [13, 14]            5   0.508  mrm pp15-16
+vm-02    answerable    mrm [30, 31]            1   0.330  mrm pp30-31
+un-01    unanswerable  (nothing)             n/a   0.375  mrm pp48-49
+un-02    unanswerable  (nothing)             n/a   0.482  mrm p24
+un-03    unanswerable  (nothing)             n/a   0.711  consult p13
+ep-01    epistemic     (nothing)             n/a   0.690  consult p17
+ep-02    epistemic     (nothing)             n/a   0.752  consult pp7-8
+ep-03    epistemic     (nothing)             n/a   0.465  consult p18
+
+======================================================================================
+RETRIEVAL
+======================================================================================
+  hit@5   11/14   0.786
+  MRR@5                0.592
+  missed  ['feat-01', 'mat-01', 'gen-02']
+
+======================================================================================
+TOP-1 SCORE BY TYPE - can a relevance threshold separate them?
+======================================================================================
+  answerable     n=14  min 0.330   max 0.771
+  unanswerable   n=3   min 0.375   max 0.711
+  epistemic      n=3   min 0.465   max 0.752
+
+  lowest answerable   0.330
+  highest unanswerable 0.711
+  -> THEY OVERLAP by 0.381. No single score threshold works.

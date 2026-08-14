@@ -10,6 +10,8 @@ CHAT_MODEL = "claude-opus-5"
 MAX_TOKENS = 4096
 TOP_K = 5
 
+EXTRACTION_MODE = "plain"
+
 CHUNK_SIZE = 500
 CHUNK_OVERLAP = 50
 
