@@ -1,0 +1,133 @@
+run          2026-08-14 19:51
+embed model  all-MiniLM-L6-v2
+extraction   plain
+chunk size   500 / overlap 50
+collection   mas_docs_500  (463 chunks)
+top k        5
+
+chat model   claude-opus-5
+
+==============================================================================
+un-01  unanswerable   top-1 0.375
+Q: What is Julius Baer's dividend policy?
+==============================================================================
+The passages don't address this. They cover the objectives and materiality considerations of the MAS FEAT Principles [2][3], a list of references to MAS publications and initiatives [1], and lists of contributing organisations [4][5] — none of which mention Julius Baer or any dividend policy. I can't answer this from the material provided.
+
+Sources
+[1] mas-ai-model-risk-mgmt.pdf, pp48-49
+[2] mas-feat-principles.pdf, p3
+[3] mas-feat-principles.pdf, p4
+[4] mas-feat-principles.pdf, p14
+[5] mas-feat-principles.pdf, p14
+
+retrieved but never cited: []
+tokens: 1316 in / 124 out
+
+verdict: Refused to answer.
+
+==============================================================================
+un-02  unanswerable   top-1 0.482
+Q: What are the capital adequacy requirements for banks in Singapore?
+==============================================================================
+The passages don't address capital adequacy requirements. They cover MAS material on AI model risk management in banks — specifically development, validation and deployment standards [4], performance thresholds agreed between developers and validators [1], explainability requirements in development standards [3], and approaches to assessing fairness such as defining protected features or attributes [5] — along with a list of contributors to the FEAT principles [2]. Nothing here speaks to capital requirements, and I can't infer them from this material.
+
+Sources
+[1] mas-ai-model-risk-mgmt.pdf, p24
+[2] mas-feat-principles.pdf, p14
+[3] mas-ai-model-risk-mgmt.pdf, pp25-26
+[4] mas-ai-model-risk-mgmt.pdf, pp15-16
+[5] mas-ai-model-risk-mgmt.pdf, pp27-28
+
+retrieved but never cited: []
+tokens: 1234 in / 182 out
+
+verdict: Refused to answer.
+
+==============================================================================
+un-03  unanswerable   top-1 0.711
+Q: What does the EU AI Act require for high-risk AI systems?
+==============================================================================
+The passages do not address the EU AI Act or its requirements for high-risk AI systems. They concern MAS materials only — a consultation on AI risk guidelines and an AI model risk management paper — covering topics such as FI frameworks, policies and procedures for AI oversight, risk materiality assessments and AI inventories [1][4], basic policies commensurate with an FI's level of AI adoption [2], cross-functional oversight forums and control standards [3], and Board and senior management responsibility for consistent standards and accountability [5]. I cannot answer your question from this material.
+
+Sources
+[1] mas-ai-risk-guidelines-consultation.pdf, p13
+[2] mas-ai-risk-guidelines-consultation.pdf, p6
+[3] mas-ai-model-risk-mgmt.pdf, p10
+[4] mas-ai-model-risk-mgmt.pdf, p12
+[5] mas-ai-risk-guidelines-consultation.pdf, p16
+
+retrieved but never cited: []
+tokens: 1314 in / 186 out
+
+verdict: Refused to answer.
+
+==============================================================================
+ep-01  epistemic   top-1 0.690
+Q: Does our inventory capture every use case including embedded AI in vendor products, and can we show clear linkages to the data, technology and third-party inventories?
+==============================================================================
+The passages set out expectations for inventory scope and linkages but do not address embedded AI in vendor products or third-party inventories specifically, and they cannot tell you whether your own inventory meets these expectations.
+
+On what is covered: MAS proposes that FIs establish and maintain an accurate, up-to-date inventory of AI use cases, systems or models to support governance, oversight and risk management across the AI lifecycle [5]. Whether the FI enhances existing inventories or creates a dedicated AI inventory, there should be clear linkages between the AI inventory and other relevant inventories in the FI [1]. A key purpose is ensuring AI is used only within the scope approved — for example the purpose, jurisdiction and use case [3].
+
+On linkages in practice, one bank built an AI use case inventory aggregating information from the AI model inventory and other inventories or repositories relating to assets and controls in areas such as data, technology and operational management [2]. Most banks have clear policies on the scope of AI assets to be inventoried, the roles responsible for maintaining it, and the update processes [2][4].
+
+Nothing in these passages addresses AI embedded in vendor or third-party products, or linkage to a third-party/vendor inventory — you would need other source material for that part.
+
+Sources
+[1] mas-ai-risk-guidelines-consultation.pdf, p17
+[2] mas-ai-model-risk-mgmt.pdf, p14
+[3] mas-ai-model-risk-mgmt.pdf, p13
+[4] mas-ai-model-risk-mgmt.pdf, p14
+[5] mas-ai-risk-guidelines-consultation.pdf, p8
+
+retrieved but never cited: []
+tokens: 1374 in / 555 out
+
+verdict: it separates.
+
+==============================================================================
+ep-02  epistemic   top-1 0.752
+Q: Is our overall AI risk exposure material enough to trigger the dedicated cross-functional committee, and how would we evidence that judgment to a supervisor?
+==============================================================================
+The passages don't provide criteria for determining materiality, so this judgment can't be resolved from them. What they establish is the trigger itself: where an FI's overall AI risk exposure is deemed material, MAS proposes the FI establish a dedicated cross-functional committee to ensure adequate oversight and proactively address potential gaps in risk management coverage [2][4]. Notably, how overall AI risk exposure should be assessed at the organisational level is itself an open consultation question — MAS is seeking comments on both the committee proposal and the assessment approach [1][5]. One passage indicates the assessment is the FI's own: where AI use could adversely impact the FI or its customers, the FI should assess whether such heightened management oversight is necessary [3].
+
+Nothing in these passages addresses evidencing that judgment to a supervisor — documentation or demonstration expectations are not covered here.
+
+Sources
+[1] mas-ai-risk-guidelines-consultation.pdf, pp7-8
+[2] mas-ai-risk-guidelines-consultation.pdf, p7
+[3] mas-ai-risk-guidelines-consultation.pdf, pp16-17
+[4] mas-ai-risk-guidelines-consultation.pdf, p16
+[5] mas-ai-risk-guidelines-consultation.pdf, p10
+
+retrieved but never cited: []
+tokens: 1412 in / 369 out
+
+verdict: it separates.
+
+==============================================================================
+ep-03  epistemic   top-1 0.465
+Q: Are our risk materiality ratings genuinely driving proportionate controls, or are they a label applied after the fact?
+==============================================================================
+The passages cannot tell you which is true of your firm — that is an internal evidence question — but they set out what a genuinely driving assessment looks like, giving you testable criteria.
+
+The methodology should be applied **consistently** across every AI use case, system or model, with higher-materiality items receiving more stringent scrutiny [1]. Materiality should map to the **depth and scope of validation and monitoring** required [2], and to control intensity in specific domains — for example, greater attention to bias controls in credit decisioning or insurance underwriting [3].
+
+Two further tests: the rating should be used **before deployment**, to confirm residual risk meets risk appetite, and both the methodology and individual assessments should be **regularly reviewed** for continued relevance [5]. Assessments should also aggregate into an overall AI risk exposure feeding policy revision [4].
+
+If ratings are assigned without changing validation depth, pre-deployment approval, or control selection, they are functioning as labels rather than calibration [1][2].
+
+Sources
+[1] mas-ai-risk-guidelines-consultation.pdf, p18
+[2] mas-ai-model-risk-mgmt.pdf, p15
+[3] mas-ai-risk-guidelines-consultation.pdf, p21
+[4] mas-ai-risk-guidelines-consultation.pdf, p16
+[5] mas-ai-risk-guidelines-consultation.pdf, p18
+
+retrieved but never cited: []
+tokens: 1359 in / 540 out
+
+verdict: it separates.
+
+==============================================================================
+6 rows   8009 in / 1956 out tokens
