@@ -1,11 +1,3 @@
-"""Chunk-size experiment: which CHUNK_SIZE actually retrieves the right passage?
-
-    python experiment.py
-
-Builds one collection per candidate chunk size, then scores each against
-questions whose answers were located by hand. Prints the evidence and a verdict.
-"""
-
 import numpy as np
 import chromadb
 from sentence_transformers import SentenceTransformer
@@ -76,9 +68,9 @@ def tokenBudget(model, chunk_sets):
 def hits(model, col, question, k=TOP_K):
     r = col.query(query_embeddings=[model.encode(question)], n_results=k)
     return [
-        # scored on page_start alone, as before — the +/-1 tolerance in
+        # scored on page_start alone, as before: the +/-1 tolerance in
         # rankOfAnswer already absorbs a chunk that runs onto the next page,
-        # so the D3 MRR numbers stay comparable
+        # so the earlier MRR numbers stay comparable
         {"source": m["source"], "page": m["page_start"], "score": 1 - d / 2, "text": t}
         for m, d, t in zip(r["metadatas"][0], r["distances"][0], r["documents"][0])
     ]
@@ -114,7 +106,7 @@ def rankTable(model, collections):
 
 def showTopHits(model, collections, question, preview=240):
     print("=" * 92)
-    print(f"TOP HIT AT EACH SIZE — {question!r}")
+    print(f"TOP HIT AT EACH SIZE - {question!r}")
     print("=" * 92)
     for size, col in collections.items():
         h = hits(model, col, question)[0]
